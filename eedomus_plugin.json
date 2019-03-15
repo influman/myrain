@@ -1,0 +1,180 @@
+{
+	"plugin_id": "myrain",
+	"name_fr": "Suivi Précipitations",
+	"icon": "myrain.png",
+	"version": "1.0",
+	"creation_date": "2018-08-31",
+	"modification_date": "2019-03-07",
+	"author": "Influman",
+	"description_fr": "Suivi des précipitations à partir d'une mesure cumulée en mm",
+	"description_en": "",
+	"description_es": "",
+	"description_it": "",
+	"description_de": "",
+	"forum_link": "",
+	"parameters":
+  [
+		{
+			"parameter": "NAME", 
+			"description": "Nom du périphérique mesuré",
+			"xtype": "textfield",
+			"default_value": "Précipitations",
+			"field": "width:200, allowBlank:false"
+		},
+		{
+    		"parameter": "APIC", 
+			"description": "Périphérique précipitations cumulées...",
+    		"xtype": "combo",
+			"field": "store : getCombo('/json/list_all.php'), displayField: 'label', valueField: 'id', typeAhead: true, forceSelection: true, triggerAction: 'all', selectOnFocus: true, editable: false, shadow:true, mode: 'local', width: 250, listWidth: 300, allowBlank: true"
+		}	
+  ],
+	"scripts":
+	[
+		{
+			"name": "myrain.php"
+		}
+	],
+	"devices":
+  [
+		{
+			"device_id": "suiconso",
+			"module_id": "51",
+			"type": "http",
+			"name_fr": "plugin.parameters.NAME - Statut",
+			"icon": "myrain.png",
+			"utilisation_id": "35",
+			"parameters":
+			{
+				"VAR1": "plugin.parameters.APIC",
+				"VAR2": "",
+      			"VAR3": "",
+				"value_type": "string",
+				"ignore_errors": 3,
+				"RAW_URL": "http://localhost/script/?exec=myrain.php&apic=[VAR1]&action=updateconso",
+				"RAW_XPATH": "/MYRAIN/STATUT",
+				"POLLING": "1"
+			}
+		},
+		
+		{
+			"device_id": "jourglobal",
+			"parent_id": "suiconso",
+			"module_id": "51",
+			"type": "http",
+			"name_fr": "plugin.parameters.NAME - Jour",
+			"icon": "myrainjour.png",
+			"utilisation_id": "35",
+			"parameters":
+			{
+				"VAR1": "plugin.parameters.APIC",
+				"VAR2": "",
+      			"VAR3": "",
+				"value_type": "string",
+				"ignore_errors": 3,
+				"RAW_URL": "http://localhost/script/?exec=myrain.php&apic=[VAR1]&action=read",
+				"RAW_XPATH": "concat(/MYRAIN/JOUR_GLOBAL, 'mm')",
+				"POLLING": "1"
+			}
+		},
+		{
+			"device_id": "moisglobal",
+			"parent_id": "suiconso",
+			"module_id": "51",
+			"type": "http",
+			"name_fr": "plugin.parameters.NAME - Mois",
+			"icon": "myrainmois.png",
+			"utilisation_id": "35",
+			"parameters":
+			{
+				"VAR1": "plugin.parameters.APIC",
+				"VAR2": "",
+      			"VAR3": "",
+				"value_type": "string",
+				"ignore_errors": 3,
+				"RAW_URL": "http://localhost/script/?exec=myrain.php&apic=[VAR1]&action=read",
+				"RAW_XPATH": "concat(/MYRAIN/MOIS_GLOBAL, 'mm')",
+				"POLLING": "1"
+			}
+		},
+		{
+			"device_id": "anneeglobal",
+			"parent_id": "suiconso",
+			"module_id": "51",
+			"type": "http",
+			"name_fr": "plugin.parameters.NAME - Année",
+			"icon": "myrainan.png",
+			"utilisation_id": "35",
+			"parameters":
+			{
+				"VAR1": "plugin.parameters.APIC",
+				"VAR2": "",
+      			"VAR3": "",
+				"value_type": "string",
+				"ignore_errors": 3,
+				"RAW_URL": "http://localhost/script/?exec=myrain.php&apic=[VAR1]&action=read",
+				"RAW_XPATH": "concat(/MYRAIN/ANNEE_GLOBAL, 'mm')",
+				"POLLING": "1"
+			}
+		},
+		{
+			"device_id": "moisprecglobal",
+			"parent_id": "suiconso",
+			"module_id": "51",
+			"type": "http",
+			"name_fr": "plugin.parameters.NAME - M-1",
+			"icon": "myrainmoisprec.png",
+			"utilisation_id": "35",
+			"parameters":
+			{
+				"VAR1": "plugin.parameters.APIC",
+				"VAR2": "",
+      			"VAR3": "",
+				"value_type": "string",
+				"ignore_errors": 3,
+				"RAW_URL": "http://localhost/script/?exec=myrain.php&apic=[VAR1]&action=read",
+				"RAW_XPATH": "concat(/MYRAIN/MOIS_PREC_GLOBAL, 'mm')",
+				"POLLING": "1"
+			}
+		},
+		{
+			"device_id": "anprecglobal",
+			"parent_id": "suiconso",
+			"module_id": "51",
+			"type": "http",
+			"name_fr": "plugin.parameters.NAME - A-1",
+			"icon": "myrainanprec.png",
+			"utilisation_id": "35",
+			"parameters":
+			{
+				"VAR1": "plugin.parameters.APIC",
+				"VAR2": "",
+      			"VAR3": "",
+				"value_type": "string",
+				"ignore_errors": 3,
+				"RAW_URL": "http://localhost/script/?exec=myrain.php&apic=[VAR1]&action=read",
+				"RAW_XPATH": "concat(/MYRAIN/ANNEE_PREC_GLOBAL, 'mm')",
+				"POLLING": "1"
+			}
+		},
+		{
+			"device_id": "jprecglobal",
+			"parent_id": "suiconso",
+			"module_id": "51",
+			"type": "http",
+			"name_fr": "plugin.parameters.NAME - J-1",
+			"icon": "myrainjourprec.png",
+			"utilisation_id": "35",
+			"parameters":
+			{
+				"VAR1": "plugin.parameters.APIC",
+				"VAR2": "",
+      			"VAR3": "",
+				"value_type": "string",
+				"ignore_errors": 3,
+				"RAW_URL": "http://localhost/script/?exec=myrain.php&apic=[VAR1]&action=read",
+				"RAW_XPATH": "concat(/MYRAIN/JOUR_PREC_GLOBAL, 'mm')",
+				"POLLING": "1"
+			}
+		}
+	]
+}
